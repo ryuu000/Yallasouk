@@ -1,1 +1,76 @@
+pragma solidity ^0.8.0;
 
+contract FreelanceMarketplace {
+    struct Job {
+        address client;
+        string title;
+        string description;
+        uint256 budget;
+        uint256 deadline;
+        address freelancer;
+        bool isCompleted;
+        bool isPaid;
+    }
+
+    Job[] public jobs;
+    mapping(address => bool) public freelancers;
+
+    event JobPosted(uint256 jobId, address client);
+    event ProposalSubmitted(uint256 jobId, address freelancer);
+    event JobCompleted(uint256 jobId);
+    event PaymentReleased(uint256 jobId);
+
+    modifier onlyClient() {
+        require(!freelancers[msg.sender], "Only clients can call this function");
+        _;
+    }
+
+    modifier onlyFreelancer() {
+        require(freelancers[msg.sender], "Only freelancers can call this function");
+        _;
+    }
+
+    function postJob(string memory _title, string memory _description, uint256 _budget, uint256 _deadline) public onlyClient {
+        uint256 jobId = jobs.length;
+        jobs.push(Job(msg.sender, _title, _description, _budget, _deadline, address(0), false, false));
+        emit JobPosted(jobId, msg.sender);
+    }
+
+    function becomeFreelancer() public {
+        freelancers[msg.sender] = true;
+    }
+
+    function submitProposal(uint256 _jobId) public onlyFreelancer {
+        require(_jobId < jobs.length, "Invalid job ID");
+        Job storage job = jobs[_jobId];
+        require(!job.isCompleted, "Job is already completed");
+
+        job.freelancer = msg.sender;
+        emit ProposalSubmitted(_jobId, msg.sender);
+    }
+
+    function acceptProposal(uint256 _jobId) public onlyClient {
+        require(_jobId < jobs.length, "Invalid job ID");
+        Job storage job = jobs[_jobId];
+        require(!job.isCompleted, "Job is already completed");
+        require(job.client == msg.sender, "Only the client can accept proposals");
+
+        job.isCompleted = true;
+        emit JobCompleted(_jobId);
+    }
+
+    function releasePayment(uint256 _jobId) public onlyClient {
+        require(_jobId < jobs.length, "Invalid job ID");
+        Job storage job = jobs[_jobId];
+        require(job.isCompleted, "Job is not yet completed");
+        require(!job.isPaid, "Payment has already been released");
+        require(job.client == msg.sender, "Only the client can release payment");
+
+        job.isPaid = true;
+        payable(job.freelancer).transfer(job.budget);
+        emit PaymentReleased(_jobId);
+    }
+}
+
+
+This smart contract allows clients to post jobs using the postJob function, freelancers to submit proposals for a job using the submitProposal function, and clients to accept proposals and release payment using the acceptProposal and releasePayment functions, respectively.
