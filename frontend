@@ -1,1 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Yalla Souk</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .job-listing {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .job-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .job-description {
+            margin-top: 10px;
+            color: #555;
+        }
+
+        .job-budget {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .apply-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Freelance Marketplace</h1>
+
+    <div class="job-listing">
+        <div class="job-title">Web Development</div>
+        <div class="job-description">
+            We are looking for a skilled web developer to build a responsive website.
+        </div>
+        <div class="job-budget">Budget: $1000</div>
+        <button class="apply-button">Apply</button>
+    </div>
+
+    <div class="job-listing">
+        <div class="job-title">Graphic Design</div>
+        <div class="job-description">
+            We need a creative graphic designer to design a logo for our company.
+        </div>
+        <div class="job-budget">Budget: $500</div>
+        <button class="apply-button">Apply</button>
+    </div>
+
+    <div class="job-listing">
+        <div class="job-title">Content Writing</div>
+        <div class="job-description">
+            We require a talented content writer to create engaging blog articles.
+        </div>
+        <div class="job-budget">Budget: $300</div>
+        <button class="apply-button">Apply</button>
+    </div>
+</body>
+</html>
 
