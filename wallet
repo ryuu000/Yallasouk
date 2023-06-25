@@ -1,1 +1,40 @@
 
+class DIDWallet:
+    def __init__(self):
+        self.wallet = {}  # Dictionary to store the wallet data
+
+    def create_did(self, did, public_key):
+        if did not in self.wallet:
+            self.wallet[did] = public_key
+            print("DID created successfully!")
+        else:
+            print("DID already exists.")
+
+    def get_public_key(self, did):
+        if did in self.wallet:
+            return self.wallet[did]
+        else:
+            print("DID not found in the wallet.")
+            return None
+
+    def delete_did(self, did):
+        if did in self.wallet:
+            del self.wallet[did]
+            print("DID deleted successfully!")
+        else:
+            print("DID not found in the wallet.")
+
+
+# Usage example
+wallet = DIDWallet()
+
+# Create a DID
+wallet.create_did("did:example:1234", "public_key_1234")
+
+# Get public key for a DID
+public_key = wallet.get_public_key("did:example:1234")
+if public_key:
+    print(f"Public key: {public_key}")
+
+# Delete a DID
+wallet.delete_did("did:example:1234")
